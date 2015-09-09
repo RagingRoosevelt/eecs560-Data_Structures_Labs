@@ -5,15 +5,15 @@ all: tree.o
 tree.o: tree.h
 	g++ -c tree.cpp
 
-test: 
+test:
 	make all
-	./lab1
+	./lab2
 
 clean:
 	rm -f Lindsey_Lab02.tar.gz
 	rm -f -r ./Lindsey_Lab02
 	rm -f tree.o
-    
+
 clean-all:
 	make clean
 	rm -f ./lab2
