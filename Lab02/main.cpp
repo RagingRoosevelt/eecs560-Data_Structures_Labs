@@ -3,7 +3,7 @@
 // EECS 560 (F'2015)
 // Lab 01
 
-#include "list.h"
+#include "tree.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -13,13 +13,13 @@ int menu(int type);
 
 using namespace std;
 int main(int argc, const char* argv[]) {
-	List list;
+	Tree tree;
     
     // prepare file for reading
 	ifstream dataFile;
 	dataFile.open("data.txt");
     
-    // temp variables for reading the file into the linked list
+    // temp variables for reading the file into the linked tree
     int value;
     char character;
     string temp;
@@ -28,12 +28,12 @@ int main(int argc, const char* argv[]) {
 	while (dataFile.good())
     {
         character = char(dataFile.get());
-        // add characters to the temp string until a space is encountered, then insert into linked list
+        // add characters to the temp string until a space is encountered, then insert into linked tree
         if (character == ' ')
         {
             stringstream temps(temp);
             temps >> value;
-            list.insert(value);
+            tree.insert(value);
             //cout << value << endl;
             temp = "";
         } 
@@ -45,7 +45,7 @@ int main(int argc, const char* argv[]) {
 	dataFile.close();
     
 	cout << endl << "data.txt elements:";
-    list.print();
+    tree.print();
 
     
     // main loop, waiting for user to select option 4
@@ -57,23 +57,15 @@ int main(int argc, const char* argv[]) {
         
 		if (choice == 1) // display insert menu and then insert provided value
         {
-            choice = menu(1);
-			list.insert(choice);
+            tree.largest();
 		} 
         else if (choice == 2) // display erase menu and then insert provided value
         {
-            choice = menu(2);
-            
-			if (!list.erase(choice)) 
-            {
-				cout << "\nThe number entered is not in the list.";
-			}
+            tree.leaves();
 		} 
-        else if (choice == 3) // print list contents
+        else if (choice == 3) // print tree contents
         {
-            
-            cout << endl << "List:";
-			list.print();
+            tree.print();
 		}
         
     } while (choice != 4);// exit when user selects option 4
@@ -97,29 +89,14 @@ int menu(int type){
                     cout << endl << endl << "Invalid selection, please try again";
                 }
                 cout << endl << "Please choose one of the following commands:" << endl;
-                cout << "1 - insert" << endl;
-                cout << "2 - delete" << endl;
-                cout << "3 - print"  << endl;
+                cout << "1 - Largest element" << endl;
+                cout << "2 - Number of Leaves" << endl;
+                cout << "3 - Print Tree"  << endl;
                 cout << "4 - exit"   << endl;
                 cout << "> "         << "";
                 cin >> choice;
             }
             return choice;
-            break;
-        case 1: // insert menu
-            cout << "Choose a number to be inserted to the list:" << endl;
-            cout << "> ";
-            cin >> choice;
-            return choice;
-            break;
-        case 2: // erase menu
-            cout << "Choose a number to be deleted from the list:" << endl;
-            cout << "> ";
-            cin >> choice;
-            return choice;
-            break;
-        default: 
-            return -1;
             break;
     }
 }
