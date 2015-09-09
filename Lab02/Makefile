@@ -1,9 +1,9 @@
-all: list.o
-	g++ main.cpp list.o -o lab2
+all: tree.o
+	g++ main.cpp tree.o -o lab2
 	make clean
 
-list.o: list.h
-	g++ -c list.cpp
+tree.o: tree.h
+	g++ -c tree.cpp
 
 test: 
 	make all
@@ -12,7 +12,7 @@ test:
 clean:
 	rm -f Lindsey_Lab02.tar.gz
 	rm -f -r ./Lindsey_Lab02
-	rm -f list.o
+	rm -f tree.o
     
 clean-all:
 	make clean
@@ -22,6 +22,6 @@ tar:
 	make all
 	make clean
 	mkdir ./Lindsey_Lab02
-	cp main.cpp list.cpp list.h Makefile data.txt lab2 ./Lindsey_Lab02
+	cp main.cpp tree.cpp tree.h Makefile data.txt lab2 ./Lindsey_Lab02
 	tar -cvzf Lindsey_Lab02.tar.gz Lindsey_Lab02
 	rm -r ./Lindsey_Lab02
