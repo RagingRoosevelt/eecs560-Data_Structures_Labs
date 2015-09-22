@@ -11,9 +11,9 @@ bool primeCheck(int value);
 void rehashIfNeeded(HashTable* &hashTable);
 
 int main()
-{
-
-	ifstream dataFile("data.txt");
+{// read in data file, then display menu.  from menu selection, perform corresponding action.
+    
+    ifstream dataFile("data.txt");
 	
 	
 	// read in the prime number
@@ -32,7 +32,9 @@ int main()
     int valTmp;
 	while (dataFile >> valTmp)
     {
+        // check if the table needs to be rehashed.  rehash if needed. (pass by reference)
         rehashIfNeeded(hashTable);
+        // insert the value
 		hashTable->insert(valTmp);
 	}		
 		
@@ -46,15 +48,17 @@ int main()
         {
             choice = menu(1);
             
+            // check if the table needs to be rehashed.  rehash if needed. (pass by reference)
             rehashIfNeeded(hashTable);
             
-            // insert the origionally intended value
+            // insert the originally intended value
 			hashTable->insert(choice);
 		} 
         else if (choice == 2) // display erase menu and then insert provided value
         {
             choice = menu(2);
             
+            // remove the value if possible
 			if (!hashTable->remove(choice)) 
             {
 				cout << "\nThe number entered is not in the list.\n";
@@ -63,14 +67,16 @@ int main()
         else if (choice == 3) // print list contents
         {
 			cout << endl;
+            // print the table
 			hashTable->print();
 		}
         
     } while (choice != 4);// exit when user selects option 4
 }
 
+
 void rehashIfNeeded(HashTable* &hashTable)
-{
+{// check if passed table needs to be rehashed if another value is inserted and rehash if necessary.
     // gather information about the current table
             int load = hashTable->getLoad();
             int prime = hashTable->getPrime();
@@ -101,9 +107,10 @@ void rehashIfNeeded(HashTable* &hashTable)
             }
 }
 
-int nextPrime(int prime)
-{
-    int primeCandidate = prime+1;
+
+int nextPrime(int value) 
+{// find the first prime number larger than the passed value
+    int primeCandidate = value+1;
     while (! primeCheck(primeCandidate))
     {
         primeCandidate++;
@@ -111,8 +118,9 @@ int nextPrime(int prime)
     return primeCandidate;
 }
 
-bool primeCheck(int value)
-{
+
+bool primeCheck(int value) 
+{// check if a number is prime
     if (value % 2 == 0)
     {
         return false;
@@ -131,8 +139,7 @@ bool primeCheck(int value)
 
 
 int menu(int type)
-{
-    
+{// display the main menu and sub menus.  return values entered by the user
     int choice = -1;
     
     switch (type)
@@ -161,7 +168,7 @@ int menu(int type)
             cin >> choice;
             return choice;
             break;
-        case 2: // erase menu
+        case 2: // remove menu
             cout << "What number do you want to remove from the hash table?" << endl;
             cout << "> ";
             cin >> choice;

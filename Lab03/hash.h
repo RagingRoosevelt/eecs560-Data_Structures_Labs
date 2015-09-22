@@ -8,6 +8,7 @@ using namespace std;
 class HashTable
 {
 private:
+    // entry structure
     struct Node
     {
         int value;
@@ -17,24 +18,29 @@ private:
             value(v), flag(f) {}
     };
 
+    // for calculating load factor
     int prime;
 	int noEntries;
 
+    // table
     Node** table;
 
-
 public:
+    // constructor and destructor
     HashTable(int p);
 	virtual ~HashTable();
-    int hash(int value, int probe);
+    
+    // required functions
     void insert(int value);
 	bool remove(int value);
 	void print();
+    
+    // helper functions
+    int hash(int value, int probe);
 	double getLoadFactor();
 	int getLoad();
 	int getPrime();
     int getValueAtKey(int key);
-
-
+    
 };
 #endif
