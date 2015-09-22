@@ -90,9 +90,13 @@ void HashTable::print()
 	}
 	
 }
+int HashTable::getValueAtKey(int key)
+{
+    return table[key]->value;
+}
 double HashTable::getLoadFactor()
 {
-	return noEntries / prime;
+	return (double)noEntries / prime;
 }
 int HashTable::getLoad()
 {

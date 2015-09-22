@@ -18,7 +18,7 @@ private:
     };
 
     int prime;
-	double noEntries;
+	int noEntries;
 
     Node** table;
 
@@ -33,6 +33,7 @@ public:
 	double getLoadFactor();
 	int getLoad();
 	int getPrime();
+    int getValueAtKey(int key);
 
 
 };

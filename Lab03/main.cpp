@@ -1,10 +1,13 @@
 #include "hash.h"
 #include <fstream>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
 int menu(int type);
+int nextPrime(int prime);
+bool primeCheck(int value);
 
 int main()
 {
@@ -47,6 +50,29 @@ int main()
 		if (choice == 1) // display insert menu and then insert provided value
         {
             choice = menu(1);
+            int load = hashTable->getLoad();
+            int prime = hashTable->getPrime();
+            if (((double)load + 1) / prime >= 0.5)
+            {
+                cout << "Load problem.  Re-hashing..." << endl;
+                
+                int temp [prime];
+                for (int i=0; i <= prime; i++)
+                {
+                    temp[i] = hashTable->getValueAtKey(i);
+                }
+                delete hashTable;
+                HashTable* hashTable = new HashTable(nextPrime(prime));
+                
+                for (int i=0; i <= prime; i++)
+                {
+                    if (temp[i] != -1)
+                    {
+                        hashTable->insert(temp[i]);
+                    }
+                }
+                
+            }
 			hashTable->insert(choice);
 		} 
         else if (choice == 2) // display erase menu and then insert provided value
@@ -65,6 +91,35 @@ int main()
 		}
         
     } while (choice != 4);// exit when user selects option 4
+}
+
+
+int nextPrime(int prime)
+{
+    int primeCandidate = prime+1;
+    while (! primeCheck(primeCandidate))
+    {
+        primeCandidate++;
+    }
+    return primeCandidate;
+}
+
+bool primeCheck(int value)
+{
+    if (value % 2 == 0)
+    {
+        return false;
+    }
+    
+    for (int div = 3; div <= sqrt(value); div ++)
+    {
+        if (value % div == 0)
+        {
+            return false;   
+        }
+    }
+    
+    return true;
 }
 
 
