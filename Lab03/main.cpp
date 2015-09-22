@@ -32,14 +32,7 @@ int main()
 	while (dataFile >> valTmp)
     {
 		hashTable->insert(valTmp);
-	}
-	
-	//hashTable->print();
-	//cout << "With load factor " << hashTable->getLoadFactor() 
-	//	<< " and prime " << hashTable->getPrime() << endl;
-		
-		
-		
+	}		
 		
 	int choice = -1;
 	do 
@@ -50,29 +43,37 @@ int main()
 		if (choice == 1) // display insert menu and then insert provided value
         {
             choice = menu(1);
+            
+            // gather information about the current table
             int load = hashTable->getLoad();
             int prime = hashTable->getPrime();
-            if (((double)load + 1) / prime >= 0.5)
-            {
-                cout << "Load problem.  Re-hashing..." << endl;
+            
+            // check if the load factor is too high
+            if (((double)load + 1) / prime > 0.5)
+            { // Load factor is too high, re-hashing...
                 
+                // Gather old table values
                 int temp [prime];
-                for (int i=0; i <= prime; i++)
+                for (int i=0; i < prime; i++)
                 {
                     temp[i] = hashTable->getValueAtKey(i);
                 }
-                delete hashTable;
-                HashTable* hashTable = new HashTable(nextPrime(prime));
                 
-                for (int i=0; i <= prime; i++)
+                // create a new table
+                hashTable = new HashTable(nextPrime(2*prime));
+                
+                // populate the new table with the values from the old table
+                for (int i=0; i < prime; i++)
                 {
-                    if (temp[i] != -1)
+                    if (temp[i] != -1 )
                     {
                         hashTable->insert(temp[i]);
                     }
                 }
                 
             }
+            
+            // insert the origionally intended value
 			hashTable->insert(choice);
 		} 
         else if (choice == 2) // display erase menu and then insert provided value

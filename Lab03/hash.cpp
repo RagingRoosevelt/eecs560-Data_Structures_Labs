@@ -44,8 +44,11 @@ void HashTable::insert(int value)
         probe++;
 		key = hash(value, probe);
     }
-    table[key]->value = value;
-	noEntries++;
+    if (table[key]->value != value)
+    {
+        table[key]->value = value;
+        noEntries++;
+    }
 }
 
 bool HashTable::remove(int value)
@@ -81,7 +84,11 @@ void HashTable::print()
 {
 	for (int i = 0; i < prime; i++)
 	{
-		cout << i << ": " << table[i]->value << "\tflag = ";
+        if (i < 10)
+            cout << " " << i;
+        else
+            cout << i;
+        cout << ": " << table[i]->value << "\tflag = ";
 		if (table[i]->flag)
 			cout << "true";
 		else
