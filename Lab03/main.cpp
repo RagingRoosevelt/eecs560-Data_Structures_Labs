@@ -8,6 +8,7 @@ using namespace std;
 int menu(int type);
 int nextPrime(int prime);
 bool primeCheck(int value);
+void rehashIfNeeded(HashTable* &hashTable);
 
 int main()
 {
@@ -31,6 +32,7 @@ int main()
     int valTmp;
 	while (dataFile >> valTmp)
     {
+        rehashIfNeeded(hashTable);
 		hashTable->insert(valTmp);
 	}		
 		
@@ -44,7 +46,32 @@ int main()
         {
             choice = menu(1);
             
-            // gather information about the current table
+            rehashIfNeeded(hashTable);
+            
+            // insert the origionally intended value
+			hashTable->insert(choice);
+		} 
+        else if (choice == 2) // display erase menu and then insert provided value
+        {
+            choice = menu(2);
+            
+			if (!hashTable->remove(choice)) 
+            {
+				cout << "\nThe number entered is not in the list.\n";
+			}
+		} 
+        else if (choice == 3) // print list contents
+        {
+			cout << endl;
+			hashTable->print();
+		}
+        
+    } while (choice != 4);// exit when user selects option 4
+}
+
+void rehashIfNeeded(HashTable* &hashTable)
+{
+    // gather information about the current table
             int load = hashTable->getLoad();
             int prime = hashTable->getPrime();
             
@@ -72,28 +99,7 @@ int main()
                 }
                 
             }
-            
-            // insert the origionally intended value
-			hashTable->insert(choice);
-		} 
-        else if (choice == 2) // display erase menu and then insert provided value
-        {
-            choice = menu(2);
-            
-			if (!hashTable->remove(choice)) 
-            {
-				cout << "\nThe number entered is not in the list.\n";
-			}
-		} 
-        else if (choice == 3) // print list contents
-        {
-			cout << endl;
-			hashTable->print();
-		}
-        
-    } while (choice != 4);// exit when user selects option 4
 }
-
 
 int nextPrime(int prime)
 {
@@ -124,7 +130,8 @@ bool primeCheck(int value)
 }
 
 
-int menu(int type){
+int menu(int type)
+{
     
     int choice = -1;
     
