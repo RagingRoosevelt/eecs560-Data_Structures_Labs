@@ -105,15 +105,15 @@ void Tree::countLeavesRecursor(Tree::Node* node){
 void Tree::build(){ // function to build the tree
         
         // count the number of lines in the file
-        int numberOfLines = 0;
-        ifstream dataFile("data.txt");
-        while ( dataFile.good() )
+        /*int numberOfLines = 0;*/
+        ifstream dataFile;//("data.txt");
+        /*while ( dataFile.good() )
         {
             string line;
             getline(dataFile, line);
             numberOfLines++;
         }
-        dataFile.close();
+        dataFile.close();*/
         /*cout << "there are " << numberOfLines << " lines in the file\n";*/
 
 
@@ -123,7 +123,7 @@ void Tree::build(){ // function to build the tree
         
         
         int levelTarget = 0;
-        while(!dataFile.eof() && levelTarget < numberOfLines-2)
+        while(!dataFile.eof())// && levelTarget < numberOfLines-2)
         {
                 if (nodeRoot == NULL)
                 { // if the root doesn't exist, create it
@@ -153,12 +153,14 @@ void Tree::insertRecursor(Tree::Node* node, int levelCurrent, int levelTarget, i
             int valueR;
             // get a pair of values from the text file
             dataFile >> valueL;
-            dataFile >> valueR;
+            if (dataFile.eof()) return;
             if (valueL != 0)
             { // if we have a value for the left node, create it and establish the link
                     /*cout << "    inserting " << valueL << endl;*/
                     node->nodeLeft = new Node(valueL, NULL, NULL);
             }
+            dataFile >> valueR;
+            if (dataFile.eof()) return;
             if (valueR != 0)
             {// if we have a value for the right node, create it and establish the link
 
