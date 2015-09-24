@@ -20,7 +20,7 @@ private:
 
     // for calculating load factor
     int prime;
-	int noEntries;
+    int noEntries;
 
     // table
     Node** table;
@@ -28,18 +28,18 @@ private:
 public:
     // constructor and destructor
     HashTable(int p);
-	virtual ~HashTable();
+    virtual ~HashTable();
     
     // required functions
     void insert(int value);
-	bool remove(int value);
-	void print();
+    bool remove(int value);
+    void print();
     
     // helper functions
     int hash(int value, int probe);
-	double getLoadFactor();
-	int getLoad();
-	int getPrime();
+    double getLoadFactor();
+    int getLoad();
+    int getPrime();
     int getValueAtKey(int key);
     
 };

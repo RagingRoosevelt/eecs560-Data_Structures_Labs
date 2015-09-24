@@ -12,7 +12,7 @@ int main()
     ifstream dataFile("data.txt");
 
 
-	// read in the prime number
+    // read in the prime number
     int prime;
     if (dataFile.good())
     {
@@ -20,48 +20,48 @@ int main()
     }
 
 
-	// create a hash table
-	HashTable* hashTable = new HashTable(prime);
+    // create a hash table
+    HashTable* hashTable = new HashTable(prime);
 
 
-	// populate the hash table
+    // populate the hash table
     int valTmp;
-	while (dataFile >> valTmp)
+    while (dataFile >> valTmp)
     {
         // insert the value
-		hashTable->insert(valTmp);
-	}
+        hashTable->insert(valTmp);
+    }
 
-	int choice = -1;
-	do
+    int choice = -1;
+    do
     {
         // display main menu and get user choice
         choice = menu(0);
 
-		if (choice == 1) // display insert menu and then insert provided value
+        if (choice == 1) // display insert menu and then insert provided value
         {
             choice = menu(1);
 
 
             // insert the originally intended value
-			hashTable->insert(choice);
-		}
+            hashTable->insert(choice);
+        }
         else if (choice == 2) // display erase menu and then insert provided value
         {
             choice = menu(2);
 
             // remove the value if possible
-			if (!hashTable->remove(choice))
+            if (!hashTable->remove(choice))
             {
-				cout << "\nThe number entered is not in the list.\n";
-			}
-		}
+                cout << "\nThe number entered is not in the list.\n";
+            }
+        }
         else if (choice == 3) // print list contents
         {
-			cout << endl;
+            cout << endl;
             // print the table
-			hashTable->print();
-		}
+            hashTable->print();
+        }
 
     } while (choice != 4);// exit when user selects option 4
 }
