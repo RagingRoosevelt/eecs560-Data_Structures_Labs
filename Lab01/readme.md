@@ -1,8 +1,11 @@
+# Lab 1 - Linked list
+
 ## Task overview
 
 Implement a linked list.  Read the values in from a file.
 
-[Detailed description](https://github.com/RagingRoosevelt/EECS_560-Data_Structures/blob/master/Lab01/Lab01_Assignment.pdf)
+[Detailed description][pdf]
+[pdf]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/blob/master/Lab01/Lab01_Assignment.pdf
 
 ## Discussion
 
