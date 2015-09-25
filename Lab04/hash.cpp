@@ -8,25 +8,25 @@ using namespace std;
 HashTable::HashTable(int p)
 {// constructor
     // initialize class variables
-	noEntries = 0;
+    noEntries = 0;
     prime = p;
     table = new Node*[prime];
 
     // initialize hash table
     for (int i = 0; i < prime; i++)
-	{
-		table[i] = new Node(-1,NULL);
-	}
+    {
+        table[i] = new Node(-1,NULL);
+    }
 }
 
 
 HashTable::~HashTable()
 {// destructor
-	for (int i = 0; i <= prime; i++)
-	{
-		delete table[i];
-	}
-	delete table;
+    for (int i = 0; i <= prime; i++)
+    {
+        delete table[i];
+    }
+    delete table;
 }
 
 
@@ -59,13 +59,13 @@ void HashTable::insertDoer(int value)
 {// no need to rehash since either called by rehash or by insert (which rehashes if needed)
 
     // determine key
-	int key = hash(value);
-	Node* node = table[key];
+    int key = hash(value);
+    Node* node = table[key];
 
-	while (node->value != -1)
-	{ // cycle through the linked list until we find the end
-		node = node->nextNode;
-	}
+    while (node->value != -1)
+    { // cycle through the linked list until we find the end
+        node = node->nextNode;
+    }
     
     // insert the value
     node->value = value;
@@ -108,72 +108,72 @@ bool HashTable::remove(int value)
 
 void HashTable::rehash()
 {// rehash the table
-	double loadFactor = double(getLoad() + 1) / prime;
+    double loadFactor = double(getLoad() + 1) / prime;
 
-	if (loadFactor > 1)
-	{// check if we need to rehash
+    if (loadFactor > 1)
+    {// check if we need to rehash
 
         // set aside old table to pull values from
-		Node** oldTable = table;
-		int oldPrime = prime;
+        Node** oldTable = table;
+        int oldPrime = prime;
 
-		// find new prime then create new table
-		prime = nextPrime(2*prime);
-		table = new Node*[prime];
+        // find new prime then create new table
+        prime = nextPrime(2*prime);
+        table = new Node*[prime];
         
         cout << "New load factor would have been " << loadFactor 
              << ".\nRehashing needed.  New prime is " << prime << ".\n\n";
 
-	    // initialize the new hash table
-	    for (int i = 0; i < prime; i++)
-		{
-			table[i] = new Node(-1,NULL);
-		}
+        // initialize the new hash table
+        for (int i = 0; i < prime; i++)
+        {
+            table[i] = new Node(-1,NULL);
+        }
 
         // start inserting values into the new table from the old one
-		noEntries = 0;
-		for (int i = 0; i < oldPrime; i++)
-		{
-			Node* node = oldTable[i];
+        noEntries = 0;
+        for (int i = 0; i < oldPrime; i++)
+        {
+            Node* node = oldTable[i];
             
-			while (node->nextNode != NULL)
-			{
-				insertDoer(node->value);
-				node = node->nextNode;
-			}
-		}
+            while (node->nextNode != NULL)
+            {
+                insertDoer(node->value);
+                node = node->nextNode;
+            }
+        }
 
-	}
+    }
 }
 
 
 void HashTable::print()
 {// print the table just iterating over the values
-	for (int i = 0; i < prime; i++)
-	{
+    for (int i = 0; i < prime; i++)
+    {
         // start at the head of the linked list
-		Node* node = table[i];
+        Node* node = table[i];
 
         // padding if table index is less than 10
-		if ((i < 10) && (prime >= 10))
-		{
-			cout << " " << i;
-		}
-		else
-		{
-			cout << i;
-		}
-		cout << ": ";
+        if ((i < 10) && (prime >= 10))
+        {
+            cout << " " << i;
+        }
+        else
+        {
+            cout << i;
+        }
+        cout << ": ";
         
         // run through linked list at current table index
-		while (node->value != -1)
-		{
-			cout << node->value << " ";
-			node = node->nextNode;
-		}
+        while (node->value != -1)
+        {
+            cout << node->value << " ";
+            node = node->nextNode;
+        }
         
-		cout << endl;
-	}
+        cout << endl;
+    }
 }
 
 
@@ -197,19 +197,19 @@ bool HashTable::find(int value)
 
 double HashTable::getLoadFactor()
 { // calcualte and return the load factor
-	return (double)noEntries / prime;
+    return (double)noEntries / prime;
 }
 
 
 int HashTable::getLoad()
 {// return the number of entries in the table
-	return noEntries;
+    return noEntries;
 }
 
 
 int HashTable::getPrime()
 {// return the size of the table (the prime that was used to create it)
-	return prime;
+    return prime;
 }
 
 
