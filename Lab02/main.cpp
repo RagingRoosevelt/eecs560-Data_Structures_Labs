@@ -13,7 +13,7 @@ int menu(int type);
 
 using namespace std;
 int main(int argc, const char* argv[]) {
-	Tree tree;
+    Tree tree;
 
     // build the tree from the file
     tree.build();
@@ -21,23 +21,23 @@ int main(int argc, const char* argv[]) {
 
     // main loop, waiting for user to select option 4
     int choice = -1;
-	do
+    do
     {
         // display main menu and get user choice
         choice = menu(0);
 
-		if (choice == 1) // ask the tree to print out what its largest value is
+        if (choice == 1) // ask the tree to print out what its largest value is
         {
             tree.largest();
-		}
+        }
         else if (choice == 2) // ask the tree to print out how many leaves it has
         {
             tree.leaves();
-		}
+        }
         else if (choice == 3) // print tree contents
         {
             tree.print();
-		}
+        }
 
     } while (choice != 4);// exit when user selects option 4
     return 0;

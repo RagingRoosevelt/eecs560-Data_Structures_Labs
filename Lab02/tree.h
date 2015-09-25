@@ -12,16 +12,16 @@
 class Tree {
 
 private:
-	struct Node {
-		int data;
-		bool isLeaf;
-		Node *nodeLeft;
-		Node *nodeRight;
-		Node(int d, Node *l, Node *r) :
-				data(d), nodeLeft(l), nodeRight(r) {
-		}
-	};
-	Node *nodeRoot;
+    struct Node {
+        int data;
+        bool isLeaf;
+        Node *nodeLeft;
+        Node *nodeRight;
+        Node(int d, Node *l, Node *r) :
+                data(d), nodeLeft(l), nodeRight(r) {
+        }
+    };
+    Node *nodeRoot;
     int leafCount;
 
     // helping functions using recursion
@@ -32,8 +32,8 @@ private:
     void insertRecursor(Node* node, int levelCurrent, int levelTarget, std::ifstream& dataFile);
 
 public:
-	Tree();
-	virtual ~Tree();
+    Tree();
+    virtual ~Tree();
     void build();
     void largest();
     void leaves();

@@ -13,19 +13,19 @@ int menu(int type);
 
 using namespace std;
 int main(int argc, const char* argv[]) {
-	List list;
+    List list;
     
     // prepare file for reading
-	ifstream dataFile;
-	dataFile.open("data.txt");
+    ifstream dataFile;
+    dataFile.open("data.txt");
     
     // temp variables for reading the file into the linked list
     int value;
     char character;
     string temp;
-	
+    
     // read through the data file
-	while (dataFile.good())
+    while (dataFile.good())
     {
         character = char(dataFile.get());
         // add characters to the temp string until a space is encountered, then insert into linked list
@@ -42,39 +42,39 @@ int main(int argc, const char* argv[]) {
             temp += character;
         }
     }
-	dataFile.close();
+    dataFile.close();
     
-	cout << endl << "data.txt elements:";
+    cout << endl << "data.txt elements:";
     list.print();
 
     
     // main loop, waiting for user to select option 4
     int choice = -1;
-	do 
+    do 
     {
         // display main menu and get user choice
         choice = menu(0);
         
-		if (choice == 1) // display insert menu and then insert provided value
+        if (choice == 1) // display insert menu and then insert provided value
         {
             choice = menu(1);
-			list.insert(choice);
-		} 
+            list.insert(choice);
+        } 
         else if (choice == 2) // display erase menu and then insert provided value
         {
             choice = menu(2);
             
-			if (!list.erase(choice)) 
+            if (!list.erase(choice)) 
             {
-				cout << "\nThe number entered is not in the list.";
-			}
-		} 
+                cout << "\nThe number entered is not in the list.";
+            }
+        } 
         else if (choice == 3) // print list contents
         {
             
             cout << endl << "List:";
-			list.print();
-		}
+            list.print();
+        }
         
     } while (choice != 4);// exit when user selects option 4
     return 0;
