@@ -39,90 +39,90 @@ int HashTable::hash(int value)
 void HashTable::insert(int value)
 {// insert a value into the table
 
+    if (!find(value))
+    {// check if value is already in table
+
+        // rehash if needed
+        rehash();
+        
+        // actually insert the value
+        insertDoer(value);
+    }
+    else
+    {
+        cout << endl << value << " is already in the table.  Value not inserted again.\n";
+    }
+}
+
+
+void HashTable::insertDoer(int value)
+{// no need to rehash since either called by rehash or by insert (which rehashes if needed)
 
     // determine key
 	int key = hash(value);
-
 	Node* node = table[key];
 
-	while ((node->value != -1) && (node->value != value))
-	{
+	while (node->value != -1)
+	{ // cycle through the linked list until we find the end
 		node = node->nextNode;
 	}
+    
+    // insert the value
+    node->value = value;
+    node->nextNode = new Node(-1,NULL);
+    noEntries++;
 
-    if (node->value != value)
-    {
-		rehash();
-        node->value = value;
-		node->nextNode = new Node(-1,NULL);
-        noEntries++;
-
-		cout << value << " inserted. Load factor is now " << getLoadFactor() << endl;
-    }
-	else
-	{
-		cout << "\n============Warning============"
-		 	 << endl << value << " is already in the hash table"
-		 	 << "\nValue not inserted again" << endl
-			 << "===============================" << endl;
-	}
+    cout << value << " inserted. Load factor is now " << getLoadFactor() << "." << endl;
 }
 
 
 bool HashTable::remove(int value)
 {// remove a value from the table
-	/*
-    // since we're using -1 to store blanks, we don't want to remove -1
-	if (value == -1)
-	{
-		cout << "\n'-1' is an invalid selection.\n";
-		return false;
-	}
-
-    // hunt for the entry to remove based on key and starting with no probing
-	int count = 1;
-	int probe = 0;
-	int key = hash(value);
-	while ((table[key]->value != value) && (count <= prime))
-	{
-		count++;
-		probe++;
-		key = hash(value);
-	}
-
-    // if we've looped all the way around, we won't be able to find it
-	if (count == prime)
-	{
-		return false;
-	}
-
-    // if our current key location has the value, remove it.
-	else if (table[key]->value == value)
-	{
-		table[key]->value = -1;
-		table[key]->flag = true;
-		noEntries--;
-
-		return true;
-	}
-	*/
+    int key = hash(value);
+    
+    Node* node = table[key];
+    Node* previous = NULL;
+    while (node->value != -1)
+    {// loop until the end of the linked list is found
+        if (node->value == value)
+        {// if we find the value in the table
+            if (previous == NULL)
+            {// set the table's head pointer to this node
+                table[key] = node->nextNode;
+            }
+            else
+            {// set the previous node's pointer to this node
+                previous->nextNode = node->nextNode;
+            }
+            noEntries--;
+            return true;
+        }
+        
+        // advance though the linked list
+        previous = node;
+        node = node->nextNode;
+    }
+    return false;
 }
 
 
 void HashTable::rehash()
 {// rehash the table
-	double load = getLoad() + 1;
+	double loadFactor = double(getLoad() + 1) / prime;
 
-	if (load / prime > 1)
-	{// the we need to rehash
-		cout << "We need to rehash" << endl;
+	if (loadFactor > 1)
+	{// check if we need to rehash
 
+        // set aside old table to pull values from
 		Node** oldTable = table;
 		int oldPrime = prime;
 
 		// find new prime then create new table
 		prime = nextPrime(2*prime);
 		table = new Node*[prime];
+        
+        cout << "New load factor would have been " << loadFactor 
+             << ".\nRehashing needed.  New prime is " << prime << ".\n\n";
 
 	    // initialize the new hash table
 	    for (int i = 0; i < prime; i++)
@@ -130,16 +130,15 @@ void HashTable::rehash()
 			table[i] = new Node(-1,NULL);
 		}
 
+        // start inserting values into the new table from the old one
 		noEntries = 0;
-		for (int i = 0; i < prime; i++)
+		for (int i = 0; i < oldPrime; i++)
 		{
 			Node* node = oldTable[i];
-
-			// BUG HERE, PROBABLY
-
-			while (node->value != -1)
+            
+			while (node->nextNode != NULL)
 			{
-				insert(node->value);
+				insertDoer(node->value);
 				node = node->nextNode;
 			}
 		}
@@ -152,9 +151,10 @@ void HashTable::print()
 {// print the table just iterating over the values
 	for (int i = 0; i < prime; i++)
 	{
+        // start at the head of the linked list
 		Node* node = table[i];
 
-		cout << endl;
+        // padding if table index is less than 10
 		if ((i < 10) && (prime >= 10))
 		{
 			cout << " " << i;
@@ -164,19 +164,34 @@ void HashTable::print()
 			cout << i;
 		}
 		cout << ": ";
-
+        
+        // run through linked list at current table index
 		while (node->value != -1)
 		{
 			cout << node->value << " ";
 			node = node->nextNode;
 		}
+        
+		cout << endl;
 	}
 }
 
 
-bool find(int value)
+bool HashTable::find(int value)
 {// return true if the value x is in the hash table, false otherwise
-
+    int key = hash(value);
+    
+    Node* node = table[key];
+    
+    while (node->value != -1)
+    {// while we haven't found the end of the list yet
+        if (node->value == value)
+        {
+            return true;
+        }
+        node = node->nextNode; // step through linked list
+    }
+    return false;
 }
 
 

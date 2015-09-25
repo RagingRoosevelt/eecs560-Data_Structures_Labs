@@ -11,7 +11,6 @@ int main()
 
     ifstream dataFile("data.txt");
 
-
 	// read in the prime number
     int prime;
     if (dataFile.good())
@@ -33,36 +32,42 @@ int main()
 	}
 
 	int choice = -1;
+    int value = 0;
 	do
     {
         // display main menu and get user choice
         choice = menu(0);
 
-		if (choice == 1) // display insert menu and then insert provided value
+        switch (choice)
         {
-            choice = menu(1);
-
-
+		case 1: // display insert menu and then insert provided value
+            value = menu(1);
+            cout << endl;
             // insert the originally intended value
-			hashTable->insert(choice);
-		}
-        else if (choice == 2) // display erase menu and then insert provided value
-        {
-            choice = menu(2);
-
+			hashTable->insert(value);
+            break;
+		
+        case 2: // display erase menu and then insert provided value
+            value = menu(2);
             // remove the value if possible
-			if (!hashTable->remove(choice))
+			if (!hashTable->remove(value))
             {
-				cout << "\nThe number entered is not in the list.\n";
+				cout << endl << value << " is not in the table.  No value removed.\n";
 			}
-		}
-        else if (choice == 3) // print list contents
-        {
+            else
+            {
+                cout << "\nThe number " << value << " has been removed from the table.\n"
+                     << "The new load factor is " << hashTable->getLoadFactor() << ".\n";
+            }
+            break;
+		
+        case 3: // print table contents
 			cout << endl;
             // print the table
 			hashTable->print();
-		}
-
+            break;
+        }
+		
     } while (choice != 4);// exit when user selects option 4
 }
 

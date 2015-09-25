@@ -34,15 +34,16 @@ public:
 	bool remove(int value);
 	void print();
     bool find(int value);
+    int hash(int value);
 
     // helper functions
-    int hash(int value);
     void rehash();
 	double getLoadFactor();
 	int getLoad();
 	int getPrime();
     bool primeCheck(int value);
     int nextPrime(int value);
+    void insertDoer(int value);
 
 };
 #endif
