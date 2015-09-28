@@ -38,6 +38,12 @@ int HashTable::hash(int value)
 
 void HashTable::insert(int value)
 {// insert a value into the table
+    if (value == -1)
+    {
+        cout << endl << "-1 is not a valid choice." 
+             << endl << "Nothing was inserted." << endl;
+        return;
+    }
 
     if (!find(value))
     {// check if value is already in table
@@ -78,6 +84,12 @@ void HashTable::insertDoer(int value)
 
 bool HashTable::remove(int value)
 {// remove a value from the table
+    if (value == -1)
+    {
+        cout << endl << "-1 is not a valid choice." ;
+        return false;
+    }
+
     int key = hash(value);
     
     Node* node = table[key];

@@ -13,7 +13,7 @@ private:
         int value;
         Node *nextNode;
         Node(int v, Node *n) :
-                value(v), nextNode(n) {
+            value(v), nextNode(n) {
         }
     };
 
