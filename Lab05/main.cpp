@@ -35,6 +35,7 @@ int main(int argc, const char* argv[]) {
                 tree.insert(menu(1));
                 break;
             case 2:
+				tree.remove(menu(2));
                 break;
             case 3:
                 break;
@@ -92,7 +93,13 @@ int menu(int type){
         case 1:
             cout << "Please enter the number that you want to be inserted into the tree\n> ";
             cin >> choice;
-            
             return choice;
+			break;
+			
+		case 2:
+			cout << "Which number do you like to remove from the tree?\n> ";
+			cin >> choice;
+			return choice;
+			break;
     }
 }

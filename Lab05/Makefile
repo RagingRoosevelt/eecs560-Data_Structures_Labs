@@ -1,5 +1,5 @@
 all: bst.o
-	g++ main.cpp bst.o -o lab3
+	g++ main.cpp bst.o -o lab5
 	make clean
 
 bst.o: bst.h
@@ -7,21 +7,21 @@ bst.o: bst.h
 
 test:
 	make all
-	./lab3
+	./lab5
 
 clean:
-	rm -f Lindsey_Lab03.tar.gz
-	rm -f -r ./Lindsey_Lab03
+	rm -f Lindsey_Lab05.tar.gz
+	rm -f -r ./Lindsey_Lab05
 	rm -f bst.o
 
 clean-all:
 	make clean
-	rm -f ./lab3
+	rm -f ./lab5
 
 tar:
 	make all
 	make clean
-	mkdir ./Lindsey_Lab03
-	cp main.cpp bst.cpp bst.h Makefile data.txt lab3 ./Lindsey_Lab03
-	tar -cvzf Lindsey_Lab03.tar.gz Lindsey_Lab03
-	rm -r ./Lindsey_Lab03
+	mkdir ./Lindsey_Lab05
+	cp main.cpp bst.cpp bst.h Makefile data.txt lab5 ./Lindsey_Lab05
+	tar -cvzf Lindsey_Lab05.tar.gz Lindsey_Lab05
+	rm -r ./Lindsey_Lab05
