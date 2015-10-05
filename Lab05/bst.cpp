@@ -69,6 +69,7 @@ Tree::~Tree() {
 
 void Tree::levelOrder()
 {
+	cout << "levelorder: ";
     if (treeRoot != NULL)
     {
         listHead = new llNode(NULL, treeRoot);
@@ -117,6 +118,7 @@ void Tree::levelOrder()
 
 void Tree::preOrder()
 {
+	cout << "preorder: ";
     preOrderRecursor(treeRoot);
     return;
 }
@@ -134,6 +136,7 @@ void Tree::preOrderRecursor(bstNode *node)
 
 void Tree::inOrder()
 {
+	cout << "inorder: ";
     inOrderRecursor(treeRoot);
     return;
 }
@@ -280,6 +283,7 @@ Tree::bstNode * Tree::search(int value, bstNode *node)
 		return NULL;
 	}
 }
+
 
 bool Tree::remove(int value)
 {
