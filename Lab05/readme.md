@@ -9,4 +9,10 @@ Implement a binary search tree.  Read data from a file.
 
 ## Discussion
 
+I approached this with the goal of only handling nodes, not node values (especially in the removal 
+function).  I came close to that goal but ended up using values in the deleteMin and deleteMax 
+functions for the sake of convenience.
 
+I'm not happy with the node removal function.  I think I might be able to simplify some of the 
+checks I have to do (esp checking if I'm looking at the root or not) but I'm not going to bother 
+with that now.

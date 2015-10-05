@@ -22,7 +22,48 @@ Tree::Tree() {
 
 // destroy the tree
 Tree::~Tree() {
-    
+    if (treeRoot != NULL)
+    {
+        listHead = new llNode(NULL, treeRoot);
+        listTail = listHead;
+        
+        while (listHead != NULL)
+        {
+            if (listHead->treeNode->nodeLeft != NULL)
+            {
+                listTail->nodeNext = new llNode(NULL, listHead->treeNode->nodeLeft);
+                listTail = listTail->nodeNext;
+            }
+            if (listHead->treeNode->nodeRight != NULL)
+            {
+                listTail->nodeNext = new llNode(NULL, listHead->treeNode->nodeRight);
+                listTail = listTail->nodeNext;
+            }
+            
+			delete listHead->treeNode;
+            
+            llNode *temp = listHead;
+            if (listHead->nodeNext != NULL)
+            {
+                listHead = listHead->nodeNext;
+                if (temp != NULL)
+                {
+                    delete temp;
+                }
+            }
+            else
+            {
+                // delete the linked list as we leave this function
+                while (listHead->nodeNext != NULL)
+                {
+                    listHead = listHead->nodeNext;
+                    delete temp;
+                    llNode *temp = listHead;
+                }
+                return;
+            }
+        }
+    }
 }
 
 
@@ -108,31 +149,8 @@ void Tree::inOrderRecursor(bstNode *node)
 }
 
 
-Tree::bstNode * Tree::search(int value, bstNode *node)
-{
-	if (node != NULL)
-	{
-		if (value == node->value)
-		{
-			return node;
-		}
-		else if (value > node->value)
-		{
-			return search(value, node->nodeRight);
-		}
-		else if (value < node->value)
-		{
-			return search(value, node->nodeLeft);
-		}
-		else
-		{
-			return NULL;
-		}
-	}
-}
-
-
-bool Tree::insert(int value){ // function to build the tree
+bool Tree::insert(int value)
+{ // function to build the tree
     if (treeRoot == NULL)
     {
         treeRoot = new bstNode(value, NULL, NULL, NULL);
@@ -174,55 +192,13 @@ bool Tree::insert(int value){ // function to build the tree
 }// end Tree::insert
 
 
-bool Tree::remove(int value)
-{
-	bstNode *node = search(value, treeRoot);
-	
-	if (node == treeRoot)
-	{
-		
-	}
-	else if (node->nodeLeft == NULL && node->nodeRight == NULL)
-	{
-		if (node == node->nodeParent->nodeLeft)
-		{
-			node->nodeParent->nodeLeft = NULL;
-		}
-		else
-		{
-			node->nodeParent->nodeRight = NULL;
-		}
-		delete node;
-		return true;
-	}
-	else if (node->nodeLeft == NULL && node->nodeRight != NULL)
-	{
-		bstNode *min = findMin(node->nodeRight);
-		
-		// set min's parent's record of min to min's child, if it exists
-		if (min->nodeRight != NULL)
-		{
-			min->nodeParent->nodeLeft = min->nodeRight;
-			min->nodeRight->nodeParent = min->nodeParent;
-		}
-		else
-		{
-			min->nodeParent->nodeLeft = NULL;
-		}
-		
-		// set node's parent's record of node to min
-		node->nodeParent->nodeRight = min;
-		min->nodeParent = node->nodeParent;
-		
-		delete node;
-		return true;
-		
-	}
-}
-
-
 Tree::bstNode * Tree::findMax(bstNode *node)
 {
+	if (node == NULL)
+	{
+		return NULL;
+	}
+	
 	while (node->nodeRight != NULL)
 	{
 		node = node->nodeRight;
@@ -234,10 +210,184 @@ Tree::bstNode * Tree::findMax(bstNode *node)
 
 Tree::bstNode * Tree::findMin(bstNode *node)
 {
+	if (node == NULL)
+	{
+		return NULL;
+	}
+	
 	while (node->nodeLeft != NULL)
 	{
 		node = node->nodeLeft;
 	}
 	
 	return node;
+}
+
+
+bool Tree::deleteMin()
+{
+	bstNode *node = findMin(treeRoot);
+	if (node != NULL)
+	{
+		int value = node->value;
+		return remove(value);
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+bool Tree::deleteMax()
+{
+	bstNode *node = findMax(treeRoot);
+	if (node != NULL)
+	{
+		int value = node->value;
+		return remove(value);
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+Tree::bstNode * Tree::search(int value, bstNode *node)
+{
+	if (node != NULL)
+	{
+		if (value == node->value)
+		{
+			return node;
+		}
+		else if (value > node->value)
+		{
+			return search(value, node->nodeRight);
+		}
+		else if (value < node->value)
+		{
+			return search(value, node->nodeLeft);
+		}
+		else
+		{
+			return NULL;
+		}
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+bool Tree::remove(int value)
+{
+	bool nodeRemoved = false;
+	bstNode *node = search(value, treeRoot);
+	
+	while (node != NULL)
+	{
+		if (removeNode(node))
+		{
+			nodeRemoved = true;
+		}
+		node = search(value, treeRoot);
+	}
+	
+	return nodeRemoved;
+}
+bool Tree::removeNode(bstNode *node)
+{
+	if (node == NULL)
+	{// entry doesn't exist
+		return false;
+	}
+	else if (node->nodeLeft == NULL && node->nodeRight == NULL)
+	{// No children: delete node.
+		if (node == treeRoot)
+		{
+			treeRoot = NULL;
+		}
+		else
+		{
+			if (node == node->nodeParent->nodeLeft)
+			{
+				node->nodeParent->nodeLeft = NULL;
+			}
+			else
+			{
+				node->nodeParent->nodeRight = NULL;
+			}
+		}
+		delete node;
+	}
+	else if (node->nodeLeft == NULL && node->nodeRight != NULL)
+	{// Only one child (R): replace node with it's only child
+		if (node == treeRoot)
+		{
+			treeRoot = node->nodeRight;
+			node->nodeRight->nodeParent = NULL;
+		}
+		else
+		{
+			if (node->nodeParent->nodeLeft == node)
+			{
+				node->nodeParent->nodeLeft = node->nodeRight;
+			}
+			else
+			{
+				node->nodeParent->nodeRight = node->nodeRight;
+			}
+			node->nodeRight->nodeParent = node->nodeParent;
+		}
+		delete node;
+		
+	}
+	else if (node->nodeLeft != NULL && node->nodeRight == NULL)
+	{// Only one child (L): replace node with it's only child
+		
+		if (node == treeRoot)
+		{
+			treeRoot = node->nodeLeft;
+			node->nodeLeft->nodeParent = NULL;
+		}
+		else
+		{
+			if (node->nodeParent->nodeLeft == node)
+			{
+				node->nodeParent->nodeLeft = node->nodeLeft;
+			}
+			else
+			{
+				node->nodeParent->nodeRight = node->nodeLeft;
+			}
+			node->nodeLeft->nodeParent = node->nodeParent;
+		}
+		delete node;
+	}
+	else if (node->nodeLeft != NULL && node->nodeRight != NULL)
+	{// Both children: replace node with min priority element of right subtree
+		bstNode *min = findMin(node->nodeRight);
+		int minVal = min->value;
+		remove(minVal);
+		
+		if (node == treeRoot)
+		{
+			treeRoot = new bstNode(minVal, node->nodeLeft, node->nodeRight, NULL);
+		}
+		else if (node->nodeParent->nodeLeft == node)
+		{
+			node->nodeParent->nodeLeft = new bstNode(minVal, node->nodeLeft, node->nodeRight, node->nodeParent);
+		}
+		else
+		{
+			node->nodeParent->nodeRight = new bstNode(minVal, node->nodeLeft, node->nodeRight, node->nodeParent);
+		}
+		
+		delete node;
+		
+	}
+	
+	return true;
 }

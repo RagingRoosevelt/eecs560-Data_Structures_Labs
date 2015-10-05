@@ -35,11 +35,22 @@ int main(int argc, const char* argv[]) {
                 tree.insert(menu(1));
                 break;
             case 2:
-				tree.remove(menu(2));
+				if (!tree.remove(menu(2)))
+				{
+					cout << "warning: The specified value wasn't found in the tree." << endl;
+				}
                 break;
             case 3:
+				if (!tree.deleteMin())
+				{
+					cout << "warning: No minimum value found.  The tree must be empty." << endl;
+				}
                 break;
             case 4:
+				if (!tree.deleteMax())
+				{
+					cout << "warning: No maximum value found.  The tree must be empty." << endl;
+				}
                 break;
             case 5:
                 tree.preOrder();
