@@ -370,7 +370,7 @@ bool Tree::removeNode(bstNode *node)
 	{// Both children: replace node with min priority element of right subtree
 		bstNode *min = findMin(node->nodeRight);
 		int minVal = min->value;
-		remove(minVal);
+		removeNode(min);
 		
 		if (node == treeRoot)
 		{
