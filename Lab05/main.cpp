@@ -20,6 +20,28 @@ int main(int argc, const char* argv[]) {
         tree.insert(valTemp);
     }
     dataFile.close();
+    
+    // Lab assignment tests:
+    if (false)
+    {
+        tree.deleteMin();
+        tree.deleteMax();
+        tree.remove(7);
+        tree.preOrder();   // 8 3 6 13 9 10
+        tree.insert(2);
+        tree.insert(13);
+        tree.insert(11);
+        tree.insert(12);
+        tree.insert(13);
+        tree.preOrder();   // 8 3 2 6 13 9 10 11 12 13 13
+        tree.remove(6);
+        tree.remove(10);
+        tree.remove(13);
+        tree.remove(20); // not in tree
+        tree.preOrder();   // 8 3 2 9 11 12
+        tree.inOrder();    // 2 3 8 9 11 12
+        tree.levelOrder(); // 8 3 9 2 11 12
+    }
 
 
     // main loop, waiting for user to select option 4

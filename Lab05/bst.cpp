@@ -78,6 +78,10 @@ void Tree::levelOrder()
         while (listHead != NULL)
         {
             cout << listHead->treeNode->value << " ";
+            /*cout << endl << listHead->treeNode->value << "(" << listHead->treeNode 
+                 << ", par: " << listHead->treeNode->nodeParent << ")" << endl
+                 << "    left : " << listHead->treeNode->nodeLeft << endl
+                 << "    right: " << listHead->treeNode->nodeRight << endl;*/
             
             if (listHead->treeNode->nodeLeft != NULL)
             {
@@ -109,6 +113,7 @@ void Tree::levelOrder()
                     delete temp;
                     llNode *temp = listHead;
                 }
+                cout << endl;
                 return;
             }
         }
@@ -120,6 +125,7 @@ void Tree::preOrder()
 {
 	cout << "preorder: ";
     preOrderRecursor(treeRoot);
+    cout << endl;
     return;
 }
 void Tree::preOrderRecursor(bstNode *node)
@@ -138,6 +144,7 @@ void Tree::inOrder()
 {
 	cout << "inorder: ";
     inOrderRecursor(treeRoot);
+    cout << endl;
     return;
 }
 void Tree::inOrderRecursor(bstNode *node)
@@ -158,7 +165,7 @@ bool Tree::insert(int value)
     {
         treeRoot = new bstNode(value, NULL, NULL, NULL);
         return true;
-    }// end if
+    }
     else
     {
         bstNode *node = treeRoot;
@@ -177,22 +184,23 @@ bool Tree::insert(int value)
                 {
                     node = node->nodeLeft;
                 }
-            }// end if
-            else
+            }
+            else if (value >= node->value)
             {
                 if (node->nodeRight == NULL)
                 {
                     node->nodeRight = new bstNode(value, NULL, NULL, node);
                     break;
-                }// end if
+                }
                 else
                 {
                     node = node->nodeRight;
-                }// end else
-            }// end else
-        }// end while
-    }// end else
-}// end Tree::insert
+                }
+            }
+        }
+        return true;
+    }
+}
 
 
 Tree::bstNode * Tree::findMax(bstNode *node)
@@ -259,29 +267,22 @@ bool Tree::deleteMax()
 
 Tree::bstNode * Tree::search(int value, bstNode *node)
 {
-	if (node != NULL)
-	{
-		if (value == node->value)
-		{
-			return node;
-		}
-		else if (value > node->value)
-		{
-			return search(value, node->nodeRight);
-		}
-		else if (value < node->value)
-		{
-			return search(value, node->nodeLeft);
-		}
-		else
-		{
-			return NULL;
-		}
-	}
-	else
-	{
-		return NULL;
-	}
+    if (node == NULL)
+    {// if the node doesn't exist (we've traversed to the bottom of the tree)
+        return NULL;
+    }
+    else if (node->value == value)
+    {// if the current node contains the value we're looking for
+        return node;
+    }
+    else if (value < node->value)
+    {// if the value we're looking for is to the left
+        return search(value, node->nodeLeft);
+    }
+    else
+    {// if the value we're looking for is to the right
+        return search(value, node->nodeRight);
+    }
 }
 
 
@@ -313,25 +314,29 @@ bool Tree::removeNode(bstNode *node)
 		{
 			treeRoot = NULL;
 		}
-		else
-		{
-			if (node == node->nodeParent->nodeLeft)
-			{
-				node->nodeParent->nodeLeft = NULL;
-			}
-			else
-			{
-				node->nodeParent->nodeRight = NULL;
-			}
-		}
+		else if (node == node->nodeParent->nodeLeft)
+        {
+            node->nodeParent->nodeLeft = NULL;
+        }
+        else if (node == node->nodeParent->nodeRight)
+        {
+            node->nodeParent->nodeRight = NULL;
+        }
 		delete node;
 	}
 	else if (node->nodeLeft == NULL && node->nodeRight != NULL)
 	{// Only one child (R): replace node with it's only child
+
+        /*cout << endl << node->value << "(" << node 
+                 << ", par: " << node->nodeParent << ")" << endl
+                 << "    left : " << node->nodeLeft << endl
+                 << "    right: " << node->nodeRight << endl;*/
+        
+		
 		if (node == treeRoot)
 		{
 			treeRoot = node->nodeRight;
-			node->nodeRight->nodeParent = NULL;
+			treeRoot->nodeParent = NULL;
 		}
 		else
 		{
@@ -344,17 +349,18 @@ bool Tree::removeNode(bstNode *node)
 				node->nodeParent->nodeRight = node->nodeRight;
 			}
 			node->nodeRight->nodeParent = node->nodeParent;
+            
 		}
 		delete node;
 		
 	}
 	else if (node->nodeLeft != NULL && node->nodeRight == NULL)
 	{// Only one child (L): replace node with it's only child
-		
+        
 		if (node == treeRoot)
 		{
 			treeRoot = node->nodeLeft;
-			node->nodeLeft->nodeParent = NULL;
+			treeRoot->nodeParent = NULL;
 		}
 		else
 		{
@@ -372,25 +378,33 @@ bool Tree::removeNode(bstNode *node)
 	}
 	else if (node->nodeLeft != NULL && node->nodeRight != NULL)
 	{// Both children: replace node with min priority element of right subtree
-		bstNode *min = findMin(node->nodeRight);
-		int minVal = min->value;
+		
+        // find the min priority element of the right subtree
+        bstNode *min = findMin(node->nodeRight);
+        
+        /*cout << "min found\n";
+        cout << endl << min->value << "(" << min 
+                 << ", par: " << min->nodeParent << ")" << endl
+                 << "    left : " << min->nodeLeft << endl
+                 << "    right: " << min->nodeRight << endl;*/
+        
+        // set node's value to the min value
+        node->value = min->value;
+        
+        if (min->nodeRight != NULL)
+        {
+            if (min->nodeParent->nodeLeft == min)
+            {
+                min->nodeParent->nodeLeft = min->nodeRight;
+                min->nodeRight->nodeParent = min->nodeParent;
+            }
+            else
+            {
+                min->nodeParent->nodeRight = min->nodeRight;
+                min->nodeRight->nodeParent = min->nodeParent;
+            }
+        }
 		removeNode(min);
-		
-		if (node == treeRoot)
-		{
-			treeRoot = new bstNode(minVal, node->nodeLeft, node->nodeRight, NULL);
-		}
-		else if (node->nodeParent->nodeLeft == node)
-		{
-			node->nodeParent->nodeLeft = new bstNode(minVal, node->nodeLeft, node->nodeRight, node->nodeParent);
-		}
-		else
-		{
-			node->nodeParent->nodeRight = new bstNode(minVal, node->nodeLeft, node->nodeRight, node->nodeParent);
-		}
-		
-		delete node;
-		
 	}
 	
 	return true;
