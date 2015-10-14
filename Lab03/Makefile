@@ -22,6 +22,6 @@ tar:
 	make all
 	make clean
 	mkdir ./Lindsey_Lab03
-	cp main.cpp hash.cpp hash.h Makefile data.txt lab2 ./Lindsey_Lab03
+	cp main.cpp hash.cpp hash.h Makefile data.txt lab3 ./Lindsey_Lab03
 	tar -cvzf Lindsey_Lab03.tar.gz Lindsey_Lab03
 	rm -r ./Lindsey_Lab03

@@ -1,10 +1,10 @@
-#include "hash.h"
+#include "hash_open.h"
 #include <iostream>
 
 using namespace std;
 
 
-HashTable::HashTable(int p)
+HashTableOpen::HashTableOpen(int p)
 {// constructor
     // initialize class variables
     noEntries = 0;
@@ -19,7 +19,7 @@ HashTable::HashTable(int p)
 }
 
 
-HashTable::~HashTable() 
+HashTableOpen::~HashTableOpen() 
 {// destructor
     for (int i = 0; i <= prime; i++)
     {
@@ -29,13 +29,13 @@ HashTable::~HashTable()
 }
 
 
-int HashTable::hash(int value, int probe)
+int HashTableOpen::hash(int value, int probe)
 {// return hash key given value and probe amount
     return (value + probe) % prime;
 }
 
 
-void HashTable::insert(int value)
+void HashTableOpen::insert(int value)
 {// insert a value into the table
 
     // check if the value is -1 since we're using -1 to store "empty"
@@ -52,7 +52,6 @@ void HashTable::insert(int value)
     
     // if there is a collision, hunt for a key that won't cause a collision
     while (((table[key]->value != -1) || (table[key]->flag == true)) && (table[key]->value != value)) 
-    // old, buggy version: while ((table[key]->value != -1) && (table[key]->value != value))    
     {
         probe++;
         key = hash(value, probe);
@@ -71,7 +70,7 @@ void HashTable::insert(int value)
 }
 
 
-bool HashTable::remove(int value)
+bool HashTableOpen::remove(int value)
 {// remove a value from the table
 
     // since we're using -1 to store blanks, we don't want to remove -1
@@ -110,7 +109,7 @@ bool HashTable::remove(int value)
 }
 
 
-void HashTable::print()
+void HashTableOpen::print()
 {// print the table just iterating over the values
     for (int i = 0; i < prime; i++)
     {
@@ -129,25 +128,25 @@ void HashTable::print()
 }
 
 
-int HashTable::getValueAtKey(int key)
+int HashTableOpen::getValueAtKey(int key)
 {// return the value stored at a particular key location
     return table[key]->value;
 }
 
 
-double HashTable::getLoadFactor()
+double HashTableOpen::getLoadFactor()
 { // calcualte and return the load factor
     return (double)noEntries / prime;
 }
 
 
-int HashTable::getLoad()
+int HashTableOpen::getLoad()
 {// return the number of entries in the table
     return noEntries;
 }
 
 
-int HashTable::getPrime()
+int HashTableOpen::getPrime()
 {// return the size of the table (the prime that was used to create it)
     return prime;
 }

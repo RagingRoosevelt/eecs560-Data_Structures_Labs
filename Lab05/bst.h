@@ -14,7 +14,7 @@ class Tree {
 private:
     struct bstNode {
         int value;
-		bstNode *nodeParent;
+        bstNode *nodeParent;
         bstNode *nodeLeft;
         bstNode *nodeRight;
         bstNode(int v, bstNode *l, bstNode *r, bstNode *p) :
@@ -35,11 +35,11 @@ private:
     // recursive helper functions
     void inOrderRecursor(bstNode *node);
     void preOrderRecursor(bstNode *node);
-	int deleteMinFromSubtree(bstNode *root);
-	bstNode * search(int value, bstNode *node);
-	bstNode * findMax(bstNode *node);
-	bstNode * findMin(bstNode *node);
-	bool removeNode(bstNode *node);
+    int deleteMinFromSubtree(bstNode *root);
+    bstNode * search(int value, bstNode *node);
+    bstNode * findMax(bstNode *node);
+    bstNode * findMin(bstNode *node);
+    bool removeNode(bstNode *node);
 
 public:
     Tree();

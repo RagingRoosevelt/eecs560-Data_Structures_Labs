@@ -57,22 +57,22 @@ int main(int argc, const char* argv[]) {
                 tree.insert(menu(1));
                 break;
             case 2:
-				if (!tree.remove(menu(2)))
-				{
-					cout << "warning: The specified value wasn't found in the tree." << endl;
-				}
+                if (!tree.remove(menu(2)))
+                {
+                    cout << "warning: The specified value wasn't found in the tree." << endl;
+                }
                 break;
             case 3:
-				if (!tree.deleteMin())
-				{
-					cout << "warning: No minimum value found.  The tree must be empty." << endl;
-				}
+                if (!tree.deleteMin())
+                {
+                    cout << "warning: No minimum value found.  The tree must be empty." << endl;
+                }
                 break;
             case 4:
-				if (!tree.deleteMax())
-				{
-					cout << "warning: No maximum value found.  The tree must be empty." << endl;
-				}
+                if (!tree.deleteMax())
+                {
+                    cout << "warning: No maximum value found.  The tree must be empty." << endl;
+                }
                 break;
             case 5:
                 tree.preOrder();
@@ -127,12 +127,12 @@ int menu(int type){
             cout << "Please enter the number that you want to be inserted into the tree\n> ";
             cin >> choice;
             return choice;
-			break;
-			
-		case 2:
-			cout << "Which number do you like to remove from the tree?\n> ";
-			cin >> choice;
-			return choice;
-			break;
+            break;
+            
+        case 2:
+            cout << "Which number do you like to remove from the tree?\n> ";
+            cin >> choice;
+            return choice;
+            break;
     }
 }
