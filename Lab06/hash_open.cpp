@@ -21,7 +21,7 @@ HashTableOpen::HashTableOpen(int p)
 
 HashTableOpen::~HashTableOpen() 
 {// destructor
-    for (int i = 0; i <= prime; i++)
+    for (int i = 0; i < prime; i++)
     {
         delete table[i];
     }
@@ -41,7 +41,7 @@ void HashTableOpen::insert(int value)
     // check if the value is -1 since we're using -1 to store "empty"
     if (value == -1)
     {
-        cout << "\nThat is an invalid selection. '-1' not inserted.\n";
+        //cout << "\nThat is an invalid selection. '-1' not inserted.\n";
         return;
     }
     
@@ -65,7 +65,7 @@ void HashTableOpen::insert(int value)
     }
     else
     {
-        cout << endl << "The value " << value << " is already in the table.";
+        //cout << endl << "The value " << value << " is already in the table.";
     }
 }
 
@@ -76,7 +76,7 @@ bool HashTableOpen::remove(int value)
     // since we're using -1 to store blanks, we don't want to remove -1
     if (value == -1)
     {
-        cout << "\n'-1' is an invalid selection.\n";
+        //cout << "\n'-1' is an invalid selection.\n";
         return false;
     }
     

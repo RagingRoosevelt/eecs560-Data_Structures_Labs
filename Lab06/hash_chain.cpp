@@ -22,7 +22,7 @@ HashTableChain::HashTableChain(int p)
 
 HashTableChain::~HashTableChain()
 {// destructor
-    for (int i = 0; i <= prime; i++)
+    for (int i = 0; i < prime; i++)
     {
         delete table[i];
     }
@@ -40,8 +40,8 @@ void HashTableChain::insert(int value)
 {// insert a value into the table
     if (value == -1)
     {
-        cout << endl << "-1 is not a valid choice." 
-             << endl << "Nothing was inserted." << endl;
+        //cout << endl << "-1 is not a valid choice." 
+        //     << endl << "Nothing was inserted." << endl;
         return;
     }
 
@@ -56,7 +56,7 @@ void HashTableChain::insert(int value)
     }
     else
     {
-        cout << endl << value << " is already in the table.  Value not inserted again.\n";
+        //cout << endl << value << " is already in the table.  Value not inserted again.\n";
     }
 }
 
@@ -78,7 +78,7 @@ void HashTableChain::insertDoer(int value)
     node->nextNode = new Node(-1,NULL);
     noEntries++;
 
-    cout << value << " inserted. Load factor is now " << getLoadFactor() << "." << endl;
+    //cout << value << " inserted. Load factor is now " << getLoadFactor() << "." << endl;
 }
 
 
@@ -86,7 +86,7 @@ bool HashTableChain::remove(int value)
 {// remove a value from the table
     if (value == -1)
     {
-        cout << endl << "-1 is not a valid choice." ;
+        //cout << endl << "-1 is not a valid choice." ;
         return false;
     }
 
