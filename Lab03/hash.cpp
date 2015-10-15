@@ -21,7 +21,7 @@ HashTable::HashTable(int p)
 
 HashTable::~HashTable() 
 {// destructor
-    for (int i = 0; i <= prime; i++)
+    for (int i = 0; i < prime; i++)
     {
         delete table[i];
     }
