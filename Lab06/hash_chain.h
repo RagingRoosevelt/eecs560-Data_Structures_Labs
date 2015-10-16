@@ -1,4 +1,4 @@
-#ifndef HASH_CHAIN_H
+#ifndef HASH_CHAIN_H 
 #define HASH_CHAIN_H
 
 #include <iostream>

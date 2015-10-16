@@ -1,4 +1,4 @@
-#include "hash_open.h"
+#include "hash_open.h" 
 #include "hash_chain.h"
 #include "timer.h"
 #include <iostream>
@@ -13,7 +13,7 @@ int main()
     ofstream logFile ("log.csv");
 
     const int prime = 600011;
-    const int long NUMMAX = 2147483647;
+    const long int NUMMAX = 2147483647;
     int seedMax = 100;
     Timer timer;
     

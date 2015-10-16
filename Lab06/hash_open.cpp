@@ -1,4 +1,4 @@
-#include "hash_open.h"
+#include "hash_open.h" 
 #include <iostream>
 
 using namespace std;

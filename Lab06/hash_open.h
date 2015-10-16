@@ -1,4 +1,4 @@
-#ifndef HASH_OPEN_H
+#ifndef HASH_OPEN_H 
 #define HASH_OPEN_H
 
 #include <iostream>
