@@ -30,13 +30,13 @@ HashTableChain::~HashTableChain()
 }
 
 
-int HashTableChain::hash(int value)
+int HashTableChain::hash(long int value)
 {// return hash key given value and probe amount
     return value % prime;
 }
 
 
-void HashTableChain::insert(int value)
+void HashTableChain::insert(long int value)
 {// insert a value into the table
     if (value == -1)
     {
@@ -61,7 +61,7 @@ void HashTableChain::insert(int value)
 }
 
 
-void HashTableChain::insertDoer(int value)
+void HashTableChain::insertDoer(long int value)
 {// no need to rehash since either called by rehash or by insert (which rehashes if needed)
 
     // determine key
@@ -82,7 +82,7 @@ void HashTableChain::insertDoer(int value)
 }
 
 
-bool HashTableChain::remove(int value)
+bool HashTableChain::remove(long int value)
 {// remove a value from the table
     if (value == -1)
     {
@@ -189,7 +189,7 @@ void HashTableChain::print()
 }
 
 
-bool HashTableChain::find(int value)
+bool HashTableChain::find(long int value)
 {// return true if the value x is in the hash table, false otherwise
     int key = hash(value);
     

@@ -10,9 +10,9 @@ class HashTableChain
 private:
     // entry structure
     struct Node {
-        int value;
+        long int value;
         Node *nextNode;
-        Node(int v, Node *n) :
+        Node(long int v, Node *n) :
             value(v), nextNode(n) {
         }
     };
@@ -30,11 +30,11 @@ public:
     virtual ~HashTableChain();
 
     // required functions
-    void insert(int value);
-    bool remove(int value);
+    void insert(long int value);
+    bool remove(long int value);
     void print();
-    bool find(int value);
-    int hash(int value);
+    bool find(long int value);
+    int hash(long int value);
 
     // helper functions
     void rehash();
@@ -43,7 +43,7 @@ public:
     int getPrime();
     bool primeCheck(int value);
     int nextPrime(int value);
-    void insertDoer(int value);
+    void insertDoer(long int value);
 
 };
 #endif

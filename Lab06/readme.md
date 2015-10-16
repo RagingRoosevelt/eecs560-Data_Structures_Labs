@@ -1,4 +1,4 @@
-# Lab 6 - Time performance of open and close hashing methods
+# Lab 6 - Time performance of open and closed hashing methods
 
 ## Task overview
 

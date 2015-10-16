@@ -2,6 +2,7 @@
 #include "hash_chain.h"
 #include "timer.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -9,10 +10,11 @@ int menu(int type);
 
 int main()
 {// read in data file, then display menu.  from menu selection, perform corresponding action.
+    ofstream logFile ("log.csv");
 
     const int prime = 600011;
     const int long NUMMAX = 2147483647;
-    int seedMax = 5;
+    int seedMax = 100;
     Timer timer;
     
     double timesOpen[6];
@@ -21,7 +23,8 @@ int main()
     double loadFactor;
     int dataCount;
     long int value;
-    
+    double time;
+    logFile << "type, load factor, time" << endl;
     for (int lf = 0; lf <6; lf += 1)
     {
         for (int seed = 0; seed < seedMax; seed++)
@@ -39,7 +42,9 @@ int main()
                 value = rand() % NUMMAX; 
                 hashTableOpen->insert(value);
             }
-            timesOpen[lf] += timer.stop();
+            time = timer.stop();
+            timesOpen[lf] += time;
+            logFile << "open" << ", " << loadFactor << ", " << time << endl;
             
             srand(seed);
             timer.start();
@@ -48,7 +53,9 @@ int main()
                 value = rand() % NUMMAX; 
                 hashTableChain->insert(value);
             }
-            timesChaining[lf] += timer.stop();
+            time = timer.stop();
+            timesChaining[lf] += time;
+            logFile << "chin" << ", " << loadFactor << ", " << time << endl;
             
             delete hashTableOpen;
             delete hashTableChain;
@@ -61,4 +68,7 @@ int main()
         cout << "    chaining finished in average time of     " << timesChaining[lf] << endl;
         
     }
+    
+    logFile.close();
+    return 0;
 }

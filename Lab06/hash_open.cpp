@@ -29,13 +29,13 @@ HashTableOpen::~HashTableOpen()
 }
 
 
-int HashTableOpen::hash(int value, int probe)
+int HashTableOpen::hash(long int value, int probe)
 {// return hash key given value and probe amount
     return (value + probe) % prime;
 }
 
 
-void HashTableOpen::insert(int value)
+void HashTableOpen::insert(long int value)
 {// insert a value into the table
 
     // check if the value is -1 since we're using -1 to store "empty"
@@ -70,7 +70,7 @@ void HashTableOpen::insert(int value)
 }
 
 
-bool HashTableOpen::remove(int value)
+bool HashTableOpen::remove(long int value)
 {// remove a value from the table
 
     // since we're using -1 to store blanks, we don't want to remove -1

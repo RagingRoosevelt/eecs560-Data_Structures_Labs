@@ -11,10 +11,10 @@ private:
     // entry structure
     struct Node
     {
-        int value;
+        long int value;
         bool flag;
 
-        Node(int v, bool f):
+        Node(long int v, bool f):
             value(v), flag(f) {}
     };
 
@@ -31,12 +31,12 @@ public:
     virtual ~HashTableOpen();
     
     // required functions
-    void insert(int value);
-    bool remove(int value);
+    void insert(long int value);
+    bool remove(long int value);
     void print();
     
     // helper functions
-    int hash(int value, int probe);
+    int hash(long int value, int probe);
     double getLoadFactor();
     int getLoad();
     int getPrime();
