@@ -70,7 +70,7 @@ void Heap::levelOrder()
     {
         cout << heap[index] << " ";
         
-        if (index % 5 == 0)
+        if (index % noChildren == 0)
         {
             if (isEOL(index) || index==0)
             {

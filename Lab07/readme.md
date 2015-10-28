@@ -14,5 +14,9 @@ Whenever a specific value is removed, remove all instances of that value.
 ## Discussion
 
 I think I could have handled the level order printing more graciously.  I think there's probably a 
-more efficient way to determine if an integer is, for some `n`, equal to `sum_{k=1}^n (5^k)` (which 
+more efficient way to determine if an integer is, for some `n`, equal to `sum_{k=1}^n (r^k)` (which 
 is the condition to determine if we should insert `\n` before printing the next value).
+
+If I found the closed form `sum_{k=1}^n (5^k) = r^(n+1) / (r-1) - r / (r-1)`, set it equal to the 
+current index and solved to get `n = Log_r (x * (r-1) + r) - 1` and checked if it had a decimal part 
+or was an integer, I could have used that to determine if a line break were needed.
