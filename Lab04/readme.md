@@ -1,3 +1,5 @@
+([lab index](https://github.com/RagingRoosevelt/eecs560-Data_Structures_Labs))
+
 # Lab 4 - Hash table with chaining
 
 ## Task overview

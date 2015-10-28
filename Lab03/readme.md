@@ -1,3 +1,5 @@
+([lab index](https://github.com/RagingRoosevelt/eecs560-Data_Structures_Labs))
+
 # Lab 3 - Hash table with open hashing
 
 ## Task overview

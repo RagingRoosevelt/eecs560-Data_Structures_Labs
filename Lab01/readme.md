@@ -1,3 +1,5 @@
+([lab index](https://github.com/RagingRoosevelt/eecs560-Data_Structures_Labs))
+
 # Lab 1 - Linked list
 
 ## Task overview
