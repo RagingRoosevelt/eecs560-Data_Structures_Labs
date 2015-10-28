@@ -63,12 +63,45 @@ void Heap::swapValues(int& val1, int& val2)
 void Heap::levelOrder()
 // print the heap to console in level order
 {
-    cout << "Level order:";
+    int depth = 0;
+    
+    cout << "Level order:" << endl;
     for (int index=0; index <= lastIndex; index++)
     {
-        cout << " (" << index << ", " << heap[index] << ")" ;
+        cout << heap[index] << " ";
+        
+        if (index % 5 == 0)
+        {
+            if (isEOL(index) || index==0)
+            {
+                cout << endl;
+            }
+            else if (index < lastIndex)
+            {
+                cout << " - ";
+            }
+        }
     }
     cout << endl;
+}
+
+bool Heap::isEOL(int value)
+{
+    bool eol = false;
+    
+    int sum = 0;
+    int power = 1;
+    
+    while (sum < value)
+    {
+        sum += pow(noChildren, power);
+        power++;
+        if (value == sum)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 

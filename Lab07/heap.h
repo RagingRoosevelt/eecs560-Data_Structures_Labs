@@ -37,6 +37,7 @@ public:
     int myJ(int index);
     void swapValues(int& val1, int& val2);
     int findSmallestChild(int root);
+    bool isEOL(int value);
 
 };
 #endif
