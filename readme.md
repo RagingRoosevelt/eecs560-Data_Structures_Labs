@@ -7,7 +7,7 @@
 * [Lab 05][lab05] - Binary search tree
 * [Lab 06][lab06] - Time performance of open and closed hashing methods
 * [Lab 07][lab07] - Min 5-Heap
-* [Lab 07][lab07] - Binary minmax heap
+* [Lab 08][lab08] - Binary minmax heap
 
 [lab01]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab01
 [lab02]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab02
