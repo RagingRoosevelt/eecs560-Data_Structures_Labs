@@ -1,5 +1,5 @@
 all: heap.o
-	g++ main.cpp heap.o -o lab7
+	g++ main.cpp heap.o -o lab8
 	make clean
 
 heap.o: heap.h
@@ -7,21 +7,21 @@ heap.o: heap.h
 
 test:
 	make all
-	./lab7
+	./lab8
 
 clean:
-	rm -f Lindsey_Lab07.tar.gz
-	rm -f -r ./Lindsey_Lab07
+	rm -f Lindsey_Lab08.tar.gz
+	rm -f -r ./Lindsey_Lab08
 	rm -f heap.o
 
 clean-all:
 	make clean
-	rm -f ./lab7
+	rm -f ./lab8
 
 tar:
 	make all
 	make clean
-	mkdir ./Lindsey_Lab07
-	cp main.cpp heap.cpp heap.h Makefile data.txt lab7 ./Lindsey_Lab07
-	tar -cvzf Lindsey_Lab07.tar.gz Lindsey_Lab07
-	rm -r ./Lindsey_Lab07
+	mkdir ./Lindsey_Lab08
+	cp main.cpp heap.cpp heap.h Makefile data.txt lab8 ./Lindsey_Lab08
+	tar -cvzf Lindsey_Lab08.tar.gz Lindsey_Lab08
+	rm -r ./Lindsey_Lab08
