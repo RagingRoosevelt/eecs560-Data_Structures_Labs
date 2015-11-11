@@ -80,27 +80,34 @@ void HeapLeftist::levelOrder()
     if (heapHead == NULL)
         return;
 
-    cout << "Level order: " ;
+    cout << "Level order: " << endl ;
 
     Queue *queueHead = new Queue(NULL, heapHead);
     Queue *queueTail = queueHead;
 
     while (queueHead != NULL)
     {
+
+        cout << queueHead->node->value << " (rank:" << queueHead->node->rank << ")   ";
+
+
+
         if (queueHead->node->childLeft != NULL)
         {
-            queueTail->ll = new Queue(NULL, queueHead->node->childLeft);
+            queueTail->llNext = new Queue(NULL, queueHead->node->childLeft);
+            queueTail = queueTail->llNext;
+            //cout << "    added left child: " << queueTail << endl;
         }
+
         if (queueHead->node->childRight != NULL)
         {
-            queueTail->ll = new Queue(NULL, queueHead->node->childRight);
+            queueTail->llNext = new Queue(NULL, queueHead->node->childRight);
+            queueTail = queueTail->llNext;
+            //cout << "    added right child: " << queueTail << endl;
         }
 
-        cout << queueHead->node->value << " ";
-
-        Queue *temp = queueHead;
-        queueHead = queueHead->ll;
-        delete temp;
+        queueHead = queueHead->llNext;
+        //delete temp;
     }
 
     cout << endl;

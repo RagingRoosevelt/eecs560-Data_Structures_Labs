@@ -22,11 +22,11 @@ private:
     };
 
     struct Queue{
-        Queue *ll;
+        Queue *llNext;
         Node *node;
 
         Queue(Queue *l, Node *n) :
-            ll(l), node(n) {
+            llNext(l), node(n) {
         }
     };
 
