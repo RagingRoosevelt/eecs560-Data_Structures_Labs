@@ -8,6 +8,7 @@
 * [Lab 06][lab06] - Time performance of open and closed hashing methods
 * [Lab 07][lab07] - Min 5-Heap
 * [Lab 08][lab08] - Binary minmax heap
+* [Lab 09][lab09] - Skew heap, leftist heap, and performance testing for both
 
 [lab01]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab01
 [lab02]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab02
@@ -17,3 +18,4 @@
 [lab06]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab06
 [lab07]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab07
 [lab08]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab08
+[lab09]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab09
