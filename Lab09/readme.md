@@ -1,6 +1,6 @@
 ([lab index](https://github.com/RagingRoosevelt/eecs560-Data_Structures_Labs))
 
-# Lab 8 - Skew heap, leftist heap, and performance testing for both
+# Lab 9 - Skew heap, leftist heap, and performance testing for both
 
 ## Task overview
 
