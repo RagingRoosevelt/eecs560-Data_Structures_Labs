@@ -18,6 +18,14 @@ private:
         key(k), order(o), rSib(s), fChild(f) {}
     };
     
+    struct Queue{
+        Queue *next;
+        Node *node;
+
+        Queue(Queue *q, Node *n) :
+            next(q), node(n) {}
+    };
+    
     int treecount;
     Node** queue;
     
@@ -36,5 +44,6 @@ public:
     // interface functions
     void insert(int value);
     void levelOrder();
+    bool deleteMin();
 };
 #endif

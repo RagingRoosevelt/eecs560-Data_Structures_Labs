@@ -4,6 +4,7 @@
 
 using namespace std;
 
+
 BinomQueue::BinomQueue()
 {
     treecount = 10;
@@ -145,38 +146,125 @@ BinomQueue::Node* BinomQueue::mergeTrees(Node* root1, Node* root2)
 
 void BinomQueue::levelOrder()
 {
-    cout << "Level order:";
+    cout << endl << "Level order:" << endl;
     for (int order=0; order<treecount; order++)
     {
-        cout << endl << endl << "---B" << order << "---" << endl;
         Node* node = queue[order];
-        
-        if (node==NULL)
-            cout << "tree is empty";
-        
-        
-        levelOrderTree(node);
+        if (node != NULL)
+        {
+            cout << "---B" << order << "---" << endl;
+            
+            
+            levelOrderTree(node);
+        }
     }
-    cout << "--------" << endl;
+    cout << "--------" << endl << endl;
 }
 
 void BinomQueue::levelOrderTree(Node* root)
 {
-    Node* rSib;
+    Queue* currentLevel_h = new Queue(NULL, root);
+    Queue* currentLevel_t = currentLevel_h;
+    Queue* nextLevel_h = NULL;
+    Queue* nextLevel_t = NULL;
     
-    while (root != NULL)
+    while (currentLevel_h != NULL)
     {
-        cout << root->key << " ";
-        rSib = root->rSib;
-        while (rSib != NULL)
+        Node* node = currentLevel_h->node;
+        
+        while (node != NULL)
         {
-            cout << rSib->key << " ";
+            cout << node->key << " ";
             
-            rSib = rSib->rSib;
+            if (node->fChild != NULL)
+            {
+                if (nextLevel_h == NULL)
+                {
+                    nextLevel_h = new Queue(NULL, node->fChild);
+                    nextLevel_t = nextLevel_h;
+                }
+                else
+                {
+                    nextLevel_t->next = new Queue(NULL, node->fChild);
+                    nextLevel_t = nextLevel_t->next;
+                }
+            }
+            
+            node = node->rSib;
         }
-            
-        cout << endl;
-        root = root->fChild;
+        
+        if (currentLevel_h->next != NULL)
+        {
+            Queue* temp = currentLevel_h;
+            currentLevel_h = currentLevel_h->next;
+            delete temp;
+        }
+        else
+        {
+            currentLevel_h = nextLevel_h;
+            currentLevel_t = nextLevel_t;
+            nextLevel_h = NULL;
+            nextLevel_t = NULL;
+            cout << endl;
+        }
     }
+    
+    
     return;
+}
+
+
+bool BinomQueue::deleteMin()
+{
+    int smallestIndex = -1;
+    for (int index = 0; index < treecount; index++)
+    {
+        if (queue[index] != NULL)
+        {
+            if (smallestIndex == -1 || queue[index]->key < queue[smallestIndex]->key)
+            {
+                smallestIndex = index;
+            }
+        }
+    }
+    
+    if (smallestIndex == -1)
+    {
+        return false;
+    }
+    
+    
+    if (smallestIndex == 0)
+    {
+        Node* temp = queue[smallestIndex];
+        queue[smallestIndex] = NULL;
+        delete temp;
+        return true;
+    }
+    
+    
+    Node* tempRoot = queue[smallestIndex];
+    Node* child = tempRoot->fChild;
+    queue[smallestIndex] = NULL;
+    
+    
+    Node** tempQueue = new Node* [treecount];
+    for (int index=0; index < treecount; index++)
+    {
+        if (index >= smallestIndex)
+        {
+            tempQueue[index] = NULL;
+        }
+        else
+        {
+            tempQueue[index] = child;
+            child = child->rSib;
+            tempQueue[index]->rSib = NULL;
+        }
+    }
+    
+    delete tempRoot;
+    queue = mergeQueues(queue, tempQueue);
+    
+    return true;
 }

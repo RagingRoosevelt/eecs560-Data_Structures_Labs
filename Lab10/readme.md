@@ -4,8 +4,8 @@
 
 ## Task overview
 
-Construct a class for a binomial queue.  Include support for insert, deletemin, and levelorder.  
-Read data from a hardcoded file.
+Construct a class for a binomial queue.  Include support for insert, deletemin, and levelorder. Read 
+data from a hardcoded file.
 
 [Detailed description][pdf]
 
