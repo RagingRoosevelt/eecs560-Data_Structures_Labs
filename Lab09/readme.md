@@ -23,3 +23,5 @@ I think both heaps are without any bugs.  The when performing the level-order pr
 there are probably more efficient ways to decide if a new line should be started due to descending 
 a level in the tree.  The method I'm using is simple, though, and I didn't see a reason to implement
 something more complicated.
+
+[Report](https://github.com/RagingRoosevelt/EECS_560-Data_Structures/blob/master/Lab09/Report_Lindsey_Lab09.pdf)
