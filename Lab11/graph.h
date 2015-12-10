@@ -13,14 +13,21 @@ private:
 		int vertexCount;
 		int currentRow;
 		int currentColumn;
+        
+        Table(int v) : vertexCount(v) {}
+        Table() {}
 	};
 
 	Table graph;
 	bool* visited;
+    
 	bool cycleDetection(int from, int to);
 	void initializeVisited();
-	void initializeTable(Table t);
+	void initializeTable(Table &t);
 	void print(Table t);
+    void sortArray(int a[][3], int size);
+    void printMST(Table t);
+    int mstCost(Table t);
 
 public:
     // constructor and destructor
@@ -30,7 +37,33 @@ public:
     // interface functions
     void insert(int value);
 	void print();
-	void prim();
-	void kruskal();
+	bool prim();
+	bool kruskal();
+};
+
+class llHeap
+{
+private:
+    struct Node{
+        Node* next;
+        
+        int to;
+        int from;
+        int cost;
+        
+        Node(int t, int f, int c) :
+            to(t), from(f), cost(c), next(NULL) {}
+    };
+    
+    Node* head;
+    int size;
+public:
+    llHeap();
+    virtual ~llHeap();
+    void insert(int t, int f, int c);
+    void remove(int &t, int &f, int &c);
+    void print();
+    bool isEmpty();
+    int length();
 };
 #endif
