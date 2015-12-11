@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+\usepackage{multicol}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{caption}
+
+\usepackage{float}
+\usepackage{caption}
+
+\newcommand{\figref}[1]{Figure \ref{#1}}
+
+
+\title{EECS 560 - Lab \#1}
+\author{Theodore Lindsey}
+
+\date{December 10, 2015}
+
+\begin{document}
+
+\maketitle
+\begin{enumerate}
+\item \textit{Should the tree after applying the two methods always be the same?}
+
+No, if several edges have the same weight, it is possible that one algorithm finds one of those edges first and the other algorithm find a different one first.  Then, if all together those edges were to form a cycle, different ones could be picked.  However, each possible resulting tree will be minimal.
+
+
+\item \textit{Which of these two algorithms is faster?}
+
+Kruska's algorithm is $O(E \log V)$ and Prim's is $O(E + V \log V)$.  Prim's is faster.
+
+
+\item \textit{Based on your initial experiment on data set \#1, do you think that the resulting, i.e., communication network is optimal? Will AT\&T satisfy the U.S. legal code with this communication network?}
+
+Yes.  The resulting tree (set of connections) results in the least cost, satisfying the minimum cost requirement.
+
+
+\item \textit{Now, run your code on data set \#2 which contains some additional nodes. What is the cost of this communication network? Will AT\&T satisfy the U.S. legal code with this communication network?}
+
+The cost of the networks decreases.
+
+
+\item \textit{Was your hypothesis in Question 1 correct? Why or why not?}
+
+Yes.  Both algorithms generated the same MSTs.
+
+
+\item \textit{Why do you think AT\&T would consider adding an additional node into their communication network (such as in Question 4)? What are the pros and cons of doing so?}
+
+As mentioned in question 4, the cost of the networks decreases.  This is because the added nodes allow for more efficient routing between nodes so that older, less efficient connections can be replaced with newer ones to the new nodes.  The cost of building the extra node will have to be weighed against the cost saved by the more efficient routing.
+\end{enumerate}
+\end{document}
