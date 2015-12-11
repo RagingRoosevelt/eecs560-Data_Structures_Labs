@@ -20,7 +20,7 @@ Graph::Graph(int vc)
 	graph.currentColumn = 0;
 }
 void Graph::initializeVisited()
-{
+{ // sets the visited flags to false
 	for (int i=0; i<graph.vertexCount; i++)
 	{
 		visited[i] = false;
@@ -37,7 +37,7 @@ Graph::~Graph()
 }
 
 void Graph::initializeTable(Table &t)
-{
+{ // sets the pointer rows and sets all the default costs to zero
 	t.edges = new int* [t.vertexCount];
 	for (int i=0; i<t.vertexCount; i++)
 	{
@@ -49,12 +49,12 @@ void Graph::initializeTable(Table &t)
 	}
 }
 void Graph::print()
-{
+{ // calls the print function on the graph
     cout << "Adjacency matrix:" << endl;
 	print(graph);
 }
 void Graph::print(Table t)
-{
+{ // prints the adjacency matrix t
 	for (int row=0; row<t.vertexCount; row++)
 	{
 		for (int col=0; col<t.vertexCount; col++)
@@ -72,7 +72,7 @@ void Graph::print(Table t)
 	}
 }
 int Graph::mstCost(Table t)
-{
+{ // calculates the sum of the costs of the edges in the minimum spanning tree t
     int sum=0;
     for (int row=0; row<t.vertexCount; row++)
 	{
@@ -88,7 +88,7 @@ int Graph::mstCost(Table t)
     return sum;
 }
 void Graph::printMST(Table t)
-{
+{ // prints the edges and cost of the minimum spanning tree t
     for (int row=0; row<t.vertexCount; row++)
 	{
 		for (int col=0; col<row; col++)
@@ -103,7 +103,7 @@ void Graph::printMST(Table t)
     cout << "  Cost = " << mstCost(t) << endl;
 }
 void Graph::insert(int value)
-{
+{ // inserts a cost into the adjacency matrix graph
 	if (graph.currentColumn + graph.currentRow == -2)
 	{
 		cout << "warning: Adjacency matrix is already full" << endl;
@@ -126,7 +126,7 @@ void Graph::insert(int value)
 }
 
 bool Graph::kruskal()
-{
+{ // computes the MST solution using Kruskal's algorithm
     llHeap candidateEdges;
     
     Table mst(graph.vertexCount);
@@ -147,17 +147,21 @@ bool Graph::kruskal()
             }
 		}
 	}
-    cout << endl << "Candidate edges - (from, to): cost" << endl;
-    candidateEdges.print();
+    // cout << endl << "Candidate edges - (from, to): cost" << endl;
+    // candidateEdges.print();
     cout << endl;
 
     int t, f, c;
     while (!candidateEdges.isEmpty() && mstEdgeCount < graph.vertexCount - 1)
     {
+        //cout << "====================" << endl;
+        //candidateEdges.print();
+        
         candidateEdges.remove(t, f, c);
         
         if (!cycleDetection(f, t))
         {
+            //cout << "    picked (" << f << ", " << t << "): " << c << endl;
             visited[f] = 1;
             visited[t] = 1;
             mst.edges[f][t] = graph.edges[f][t];
@@ -180,7 +184,7 @@ bool Graph::kruskal()
     }
 }
 bool Graph::cycleDetection(int from, int to)
-{
+{ // return true if a cycle will be created, false otherwise
 	if (visited[from] && visited[to])
 		return true;
 	else
@@ -188,7 +192,7 @@ bool Graph::cycleDetection(int from, int to)
 }
 
 bool Graph::prim()
-{
+{ // computes the MST solution using Prim's algorithm
     llHeap candidateEdges;
     
     Table mst(graph.vertexCount);
@@ -196,10 +200,81 @@ bool Graph::prim()
     int mstEdgeCount = 0;
     
 	initializeVisited();
+
     
+    visited[0] = true;
+    do
+    {
+        // update pool of candidate edges
+        candidateEdges.clear();
+        for (int from=0; from<graph.vertexCount; from++)
+        {
+            if (visited[from])
+            {
+                for (int to=0; to<graph.vertexCount; to++)
+                {
+                    // if the edge doesn't have cost zero and doesn't form a cycle, 
+                    //      add it to the candidate pool
+                    if (graph.edges[from][to] != 0 && !cycleDetection(from, to))
+                    {
+                        candidateEdges.insert(to, from, graph.edges[from][to]);
+                    }
+                }
+            }
+        }
+        
+        
+        //cout << "====================" << endl;
+        //candidateEdges.print();
+        int t, f, c;
+        candidateEdges.remove(t,f,c);
+        //cout << "    picked (" << f << ", " << t << "): " << c << endl;
+        if (t != -1 && f != -1)
+        {
+            mst.edges[f][t] = c;
+            mst.edges[t][f] = c;
+            visited[t] = 1;
+            visited[f] = 1;
+        }
+        else
+        {
+            break;
+        }
+        
+    } while (!candidateEdges.isEmpty() && edgeCount(mst) < graph.vertexCount-1);
     
+    if (edgeCount(mst) == graph.vertexCount - 1)
+    {
+        cout << "Prim: ";
+        printMST(mst);
+        return true;
+    }
+    else
+    {
+        cout << "warning: No solution" << endl;
+        return false;
+    }
+}
+int Graph::edgeCount(Table t)
+{ // counts the number edges in adjacency matrix t
+    int sum = 0;
+    for (int row=0; row<t.vertexCount; row++)
+	{
+		for (int col=0; col<row; col++)
+		{
+            if (t.edges[row][col] != 0)
+            {
+                sum++;
+            }
+		}
+	}
+    return sum;
 }
 
+
+///////////////////////////
+// Heap Member Functions //
+///////////////////////////
 llHeap::llHeap()
 {
     head = NULL;
@@ -207,16 +282,25 @@ llHeap::llHeap()
 }
 llHeap::~llHeap()
 {
+    clear();
+}
+void llHeap::clear()
+{
     Node* temp; 
     while (head!=NULL)
     {
         temp = head;
         head = head->next;
         delete temp;
-    }
+    } 
 }
 void llHeap::insert(int t, int f, int c)
 {
+    // check if edge was already inserted
+    if (contains(t,f))
+        return;
+    
+    
     Node* cursor = head;
     size ++;
     
@@ -224,7 +308,7 @@ void llHeap::insert(int t, int f, int c)
     {
         head = new Node(t, f, c);
     }
-    else if (head->cost >= c)
+    else if (head->cost > c)
     {
         cursor = head;
         
@@ -236,6 +320,8 @@ void llHeap::insert(int t, int f, int c)
     
     while (cursor != NULL)
     {
+        
+        
         if (cursor->cost <= c)
         {
             if (cursor->next == NULL)
@@ -303,4 +389,23 @@ bool llHeap::isEmpty()
 int llHeap::length()
 {
     return size;
+}
+bool llHeap::contains(int t, int f)
+{
+    Node* cursor = head;
+    while (cursor != NULL)
+    {
+        if (cursor->to == t && cursor->from == f)
+        {
+            return true;
+        }
+        else if (cursor->to == f && cursor->from == t)
+        {
+            return true;
+        }
+        
+        cursor = cursor->next;
+    }
+    
+    return false;
 }

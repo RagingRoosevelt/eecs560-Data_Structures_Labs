@@ -51,6 +51,7 @@ int main() {
             cout << "Graph " << grph << ": " << endl;
             graph.print();
             graph.kruskal();
+            graph.prim();
             cout << endl << endl;
         }
         

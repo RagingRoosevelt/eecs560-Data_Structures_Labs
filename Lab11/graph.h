@@ -28,6 +28,7 @@ private:
     void sortArray(int a[][3], int size);
     void printMST(Table t);
     int mstCost(Table t);
+    int edgeCount(Table t);
 
 public:
     // constructor and destructor
@@ -57,13 +58,16 @@ private:
     
     Node* head;
     int size;
+    
 public:
     llHeap();
     virtual ~llHeap();
+    void clear();
     void insert(int t, int f, int c);
     void remove(int &t, int &f, int &c);
     void print();
     bool isEmpty();
     int length();
+    bool contains(int t, int f);
 };
 #endif

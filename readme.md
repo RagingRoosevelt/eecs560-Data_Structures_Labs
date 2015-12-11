@@ -10,6 +10,7 @@
 * [Lab 08][lab08] - Binary minmax heap
 * [Lab 09][lab09] - Skew heap, leftist heap, and performance testing for both
 * [Lab 10][lab10] - Binomial Queue
+* [Lab 11][lab11] - Calculating minimum spanning trees from graphs
 
 [lab01]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab01
 [lab02]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab02
@@ -21,3 +22,4 @@
 [lab08]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab08
 [lab09]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab09
 [lab10]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab10
+[lab11]: https://github.com/RagingRoosevelt/EECS_560-Data_Structures/tree/master/Lab11
